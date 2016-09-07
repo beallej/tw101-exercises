@@ -9,8 +9,8 @@ import java.util.Scanner;
  */
 public class Guesser {
 
-    private int rightAnswer;
-    private Scanner scanner;
+    protected int rightAnswer;
+    protected Scanner scanner;
 
     public Guesser() {
 
@@ -22,12 +22,12 @@ public class Guesser {
 
     }
 
-    private int askForGuess(){
+    protected int askForGuess(){
         System.out.println("Enter a guess: ");
         return scanner.nextInt();
     }
 
-    private GuessCloseness checkAnswer(int guess){
+    protected GuessCloseness checkAnswer(int guess){
         if (guess == rightAnswer) {
             return GuessCloseness.equal;
         }
