@@ -21,7 +21,7 @@ public class Library {
             pattern = Pattern.compile(toMatch);
             matcher = pattern.matcher(book);
             if (matcher.matches()) {
-                printStream.print(book);
+                printStream.println(book);
             }
         }
 

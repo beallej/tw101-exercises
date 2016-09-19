@@ -1,6 +1,7 @@
 package com.thoughtworks.tw101.exercises.exercise7;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,8 +12,13 @@ public class Guesser {
 
     protected int rightAnswer;
     protected Scanner scanner;
+    private HashMap<Integer, GuessCloseness> closenessMap;
 
     public Guesser() {
+        closenessMap = new HashMap<>(3);
+        closenessMap.put(-1, GuessCloseness.tooLow);
+        closenessMap.put(0, GuessCloseness.equal);
+        closenessMap.put(1, GuessCloseness.tooHigh);
 
         scanner = new Scanner(System.in);
         Random r = new Random();
@@ -28,15 +34,8 @@ public class Guesser {
     }
 
     protected GuessCloseness checkAnswer(int guess){
-        if (guess == rightAnswer) {
-            return GuessCloseness.equal;
-        }
-        else if (guess < rightAnswer){
-            return GuessCloseness.tooLow;
-        }
-        else {
-            return GuessCloseness.tooHigh;
-        }
+        int compared = Integer.compare(guess, rightAnswer);
+        return closenessMap.get(compared);
     }
 
     public void playGame(){
@@ -44,18 +43,8 @@ public class Guesser {
         boolean correct = false;
         while (!correct){
             guessCloseness = checkAnswer(askForGuess());
-            switch (guessCloseness){
-                case equal:
-                    System.out.println("You win!");
-                    break;
-                case tooHigh:
-                    System.out.println("Too High");
-                    break;
-                default:
-                    System.out.println("Too Low");
-                    break;
-            }
-            correct = (guessCloseness == GuessCloseness.equal);
+            System.out.println(guessCloseness);
+            correct = guessCloseness.isCorrect();
         }
 
     }
